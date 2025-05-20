@@ -27,6 +27,12 @@
             &copy; {{ currentYear }} 张三的个人简历. 保留所有权利.
           </div>
           
+          <div class="social-links">
+            <a href="https://github.com/lcy0828/cv-portfolio" target="_blank" title="GitHub仓库">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+
           <div class="back-to-top">
             <a href="#hero" @click="scrollToTop">
               <i class="fas fa-arrow-up"></i> 回到顶部
@@ -131,6 +137,19 @@ onMounted(() => {
   opacity: 0.7;
 }
 
+.social-links a {
+  color: white;
+  font-size: 1.5rem;
+  opacity: 0.8;
+  transition: all 0.3s;
+}
+
+.social-links a:hover {
+  color: var(--accent-color);
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
 .back-to-top a {
   display: inline-flex;
   align-items: center;
@@ -150,15 +169,19 @@ onMounted(() => {
     align-items: flex-start;
     gap: 20px;
   }
-  
+
   .footer-nav ul {
     margin-top: 10px;
   }
-  
+
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+  }
+
+  .social-links {
+    margin: 10px 0;
   }
   
   .back-to-top {
