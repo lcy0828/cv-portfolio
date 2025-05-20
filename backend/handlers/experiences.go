@@ -164,6 +164,14 @@ func GetExperience(c *gin.Context) {
 
 // CreateExperience 创建工作经历
 func CreateExperience(c *gin.Context) {
+	// 在demo分支中，禁用工作经历创建功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "工作经历创建功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	var exp models.Experience
 	if err := c.ShouldBindJSON(&exp); err != nil {
 		c.JSON(http.StatusBadRequest, models.APIResponse{
@@ -202,12 +210,11 @@ func CreateExperience(c *gin.Context) {
 	}
 
 	result, err := database.DB.Exec(`
-		INSERT INTO experiences (period, title, company, location, color, icon, 
-		responsibilities, achievements, technologies, sort_order)
+		INSERT INTO experiences 
+		(period, title, company, location, color, icon, responsibilities, achievements, technologies, sort_order)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 		exp.Period, exp.Title, exp.Company, exp.Location, exp.Color, exp.Icon,
-		string(responsibilitiesJSON), string(achievementsJSON), string(technologiesJSON),
-		exp.SortOrder)
+		string(responsibilitiesJSON), string(achievementsJSON), string(technologiesJSON), exp.SortOrder)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.APIResponse{
@@ -217,7 +224,7 @@ func CreateExperience(c *gin.Context) {
 		return
 	}
 
-	// 获取新创建的ID
+	// 获取新创建的记录ID
 	id, err := result.LastInsertId()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.APIResponse{
@@ -237,6 +244,14 @@ func CreateExperience(c *gin.Context) {
 
 // UpdateExperience 更新工作经历
 func UpdateExperience(c *gin.Context) {
+	// 在demo分支中，禁用工作经历更新功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "工作经历更新功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	expID, err := strconv.Atoi(id)
 	if err != nil {
@@ -255,9 +270,6 @@ func UpdateExperience(c *gin.Context) {
 		})
 		return
 	}
-
-	// 确保路径ID与请求体ID一致
-	exp.ID = expID
 
 	// 将切片数据转换为JSON
 	responsibilitiesJSON, err := json.Marshal(exp.Responsibilities)
@@ -287,14 +299,14 @@ func UpdateExperience(c *gin.Context) {
 		return
 	}
 
-	result, err := database.DB.Exec(`
-		UPDATE experiences
-		SET period = ?, title = ?, company = ?, location = ?, color = ?, icon = ?,
+	_, err = database.DB.Exec(`
+		UPDATE experiences SET 
+		period = ?, title = ?, company = ?, location = ?, color = ?, icon = ?, 
 		responsibilities = ?, achievements = ?, technologies = ?, sort_order = ?
 		WHERE id = ?`,
 		exp.Period, exp.Title, exp.Company, exp.Location, exp.Color, exp.Icon,
 		string(responsibilitiesJSON), string(achievementsJSON), string(technologiesJSON),
-		exp.SortOrder, exp.ID)
+		exp.SortOrder, expID)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.APIResponse{
@@ -304,22 +316,8 @@ func UpdateExperience(c *gin.Context) {
 		return
 	}
 
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, models.APIResponse{
-			Success: false,
-			Message: "获取更新结果失败: " + err.Error(),
-		})
-		return
-	}
-
-	if rowsAffected == 0 {
-		c.JSON(http.StatusNotFound, models.APIResponse{
-			Success: false,
-			Message: "未找到要更新的工作经历",
-		})
-		return
-	}
+	// 设置记录ID
+	exp.ID = expID
 
 	c.JSON(http.StatusOK, models.APIResponse{
 		Success: true,
@@ -330,6 +328,14 @@ func UpdateExperience(c *gin.Context) {
 
 // DeleteExperience 删除工作经历
 func DeleteExperience(c *gin.Context) {
+	// 在demo分支中，禁用工作经历删除功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "工作经历删除功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	expID, err := strconv.Atoi(id)
 	if err != nil {
@@ -349,19 +355,12 @@ func DeleteExperience(c *gin.Context) {
 		return
 	}
 
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, models.APIResponse{
-			Success: false,
-			Message: "获取删除结果失败: " + err.Error(),
-		})
-		return
-	}
-
+	// 检查是否删除了记录
+	rowsAffected, _ := result.RowsAffected()
 	if rowsAffected == 0 {
 		c.JSON(http.StatusNotFound, models.APIResponse{
 			Success: false,
-			Message: "未找到要删除的工作经历",
+			Message: "未找到指定工作经历",
 		})
 		return
 	}

@@ -19,6 +19,14 @@ type PasswordChangeRequest struct {
 
 // ChangePassword 修改用户密码
 func ChangePassword(c *gin.Context) {
+	// 在demo分支中，禁用密码修改功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "密码修改功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	// 从上下文获取用户ID
 	userID, exists := c.Get("userID")
 	if !exists {

@@ -59,6 +59,14 @@ func GetProfile(c *gin.Context) {
 
 // UpdateProfile 更新个人信息
 func UpdateProfile(c *gin.Context) {
+	// 在demo分支中，禁用个人信息修改功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "个人信息修改功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	var profile models.Profile
 	if err := c.ShouldBindJSON(&profile); err != nil {
 		c.JSON(http.StatusBadRequest, models.APIResponse{

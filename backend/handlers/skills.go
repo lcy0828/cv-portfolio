@@ -148,6 +148,14 @@ func GetSkill(c *gin.Context) {
 
 // CreateSkill 创建技能
 func CreateSkill(c *gin.Context) {
+	// 在demo分支中，禁用技能创建功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "技能创建功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	var skill models.Skill
 	if err := c.ShouldBindJSON(&skill); err != nil {
 		c.JSON(http.StatusBadRequest, models.APIResponse{
@@ -200,6 +208,14 @@ func CreateSkill(c *gin.Context) {
 
 // UpdateSkill 更新技能
 func UpdateSkill(c *gin.Context) {
+	// 在demo分支中，禁用技能更新功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "技能更新功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	skillID, err := strconv.Atoi(id)
 	if err != nil {
@@ -219,9 +235,6 @@ func UpdateSkill(c *gin.Context) {
 		return
 	}
 
-	// 确保路径ID与请求体ID一致
-	skill.ID = skillID
-
 	// 将标签转换为JSON
 	tagsJSON, err := json.Marshal(skill.Tags)
 	if err != nil {
@@ -232,11 +245,11 @@ func UpdateSkill(c *gin.Context) {
 		return
 	}
 
-	result, err := database.DB.Exec(`
-		UPDATE skills
+	_, err = database.DB.Exec(`
+		UPDATE skills 
 		SET category_id = ?, name = ?, level = ?, description = ?, tags = ?
 		WHERE id = ?`,
-		skill.CategoryID, skill.Name, skill.Level, skill.Description, string(tagsJSON), skill.ID)
+		skill.CategoryID, skill.Name, skill.Level, skill.Description, string(tagsJSON), skillID)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.APIResponse{
@@ -246,22 +259,8 @@ func UpdateSkill(c *gin.Context) {
 		return
 	}
 
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, models.APIResponse{
-			Success: false,
-			Message: "获取更新结果失败: " + err.Error(),
-		})
-		return
-	}
-
-	if rowsAffected == 0 {
-		c.JSON(http.StatusNotFound, models.APIResponse{
-			Success: false,
-			Message: "未找到要更新的技能",
-		})
-		return
-	}
+	// 设置技能ID
+	skill.ID = skillID
 
 	c.JSON(http.StatusOK, models.APIResponse{
 		Success: true,
@@ -272,6 +271,14 @@ func UpdateSkill(c *gin.Context) {
 
 // DeleteSkill 删除技能
 func DeleteSkill(c *gin.Context) {
+	// 在demo分支中，禁用技能删除功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "技能删除功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	skillID, err := strconv.Atoi(id)
 	if err != nil {
@@ -291,19 +298,12 @@ func DeleteSkill(c *gin.Context) {
 		return
 	}
 
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, models.APIResponse{
-			Success: false,
-			Message: "获取删除结果失败: " + err.Error(),
-		})
-		return
-	}
-
+	// 检查是否删除了记录
+	rowsAffected, _ := result.RowsAffected()
 	if rowsAffected == 0 {
 		c.JSON(http.StatusNotFound, models.APIResponse{
 			Success: false,
-			Message: "未找到要删除的技能",
+			Message: "未找到指定技能",
 		})
 		return
 	}

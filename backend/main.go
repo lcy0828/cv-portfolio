@@ -189,45 +189,27 @@ func main() {
 		admin := api.Group("/admin")
 		admin.Use(handlers.AuthMiddleware())
 		{
-			// 个人信息接口 - 修改需要认证
+			// 个人信息接口 - 只保留GET请求
 			admin.GET("/profile", handlers.GetProfile)
-			admin.PUT("/profile", handlers.UpdateProfile)
 
-			// 技能接口
+			// 技能接口 - 只保留GET请求
 			admin.GET("/skills", handlers.GetSkills)
 			admin.GET("/skills/:id", handlers.GetSkill)
-			admin.POST("/skills", handlers.CreateSkill)
-			admin.PUT("/skills/:id", handlers.UpdateSkill)
-			admin.DELETE("/skills/:id", handlers.DeleteSkill)
 
-			// 工作经历接口
+			// 工作经历接口 - 只保留GET请求
 			admin.GET("/experiences", handlers.GetExperiences)
 			admin.GET("/experiences/:id", handlers.GetExperience)
-			admin.POST("/experiences", handlers.CreateExperience)
-			admin.PUT("/experiences/:id", handlers.UpdateExperience)
-			admin.DELETE("/experiences/:id", handlers.DeleteExperience)
 
-			// 项目经验接口
+			// 项目经验接口 - 只保留GET请求
 			admin.GET("/projects", handlers.GetProjects)
 			admin.GET("/projects/:id", handlers.GetProject)
-			admin.POST("/projects", handlers.CreateProject)
-			admin.PUT("/projects/:id", handlers.UpdateProject)
-			admin.DELETE("/projects/:id", handlers.DeleteProject)
 
-			// 证书接口
+			// 证书接口 - 只保留GET请求
 			admin.GET("/certificates", handlers.GetCertificates)
 			admin.GET("/certificates/:id", handlers.GetCertificate)
-			admin.POST("/certificates", handlers.CreateCertificate)
-			admin.PUT("/certificates/:id", handlers.UpdateCertificate)
-			admin.DELETE("/certificates/:id", handlers.DeleteCertificate)
 
-			// 设置接口
-			admin.PUT("/settings/password", handlers.ChangePassword)
-
-			// 访客密码管理
+			// 访客密码管理 - 只保留查看功能
 			admin.GET("/visitor/access", handlers.ManageVisitorAccess)
-			admin.POST("/visitor/access", handlers.AddVisitorAccess)
-			admin.DELETE("/visitor/access/:id", handlers.DeleteVisitorAccess)
 		}
 
 		// 需要访客验证的接口 - 只提供GET请求访问

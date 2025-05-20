@@ -283,6 +283,14 @@ func ManageVisitorAccess(c *gin.Context) {
 
 // AddVisitorAccess 添加访客密码
 func AddVisitorAccess(c *gin.Context) {
+	// 在demo分支中，禁用访客密码添加功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "访客密码添加功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	// 验证管理员权限
 	role, exists := c.Get("role")
 	if !exists || role != "admin" {
@@ -344,6 +352,14 @@ func AddVisitorAccess(c *gin.Context) {
 
 // DeleteVisitorAccess 删除访客密码
 func DeleteVisitorAccess(c *gin.Context) {
+	// 在demo分支中，禁用访客密码删除功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "访客密码删除功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	// 验证管理员权限
 	role, exists := c.Get("role")
 	if !exists || role != "admin" {

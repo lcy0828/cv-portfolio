@@ -131,6 +131,14 @@ func GetProject(c *gin.Context) {
 
 // CreateProject 创建新项目
 func CreateProject(c *gin.Context) {
+	// 在demo分支中，禁用项目创建功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "项目创建功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	var project models.Project
 	if err := c.ShouldBindJSON(&project); err != nil {
 		c.JSON(http.StatusBadRequest, models.APIResponse{
@@ -174,6 +182,14 @@ func CreateProject(c *gin.Context) {
 
 // UpdateProject 更新项目信息
 func UpdateProject(c *gin.Context) {
+	// 在demo分支中，禁用项目更新功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "项目更新功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
@@ -202,6 +218,12 @@ func UpdateProject(c *gin.Context) {
 			Message: "项目不存在",
 		})
 		return
+	} else if err != nil {
+		c.JSON(http.StatusInternalServerError, models.APIResponse{
+			Success: false,
+			Message: "查询项目失败: " + err.Error(),
+		})
+		return
 	}
 
 	// 转换为JSON存储
@@ -211,9 +233,9 @@ func UpdateProject(c *gin.Context) {
 
 	_, err = database.DB.Exec(
 		`UPDATE projects SET 
-		title=?, category=?, description=?, image=?, demo_link=?, repo_link=?, show_architecture=?, 
-		metrics=?, key_points=?, tech_stack=?, sort_order=? 
-		WHERE id=?`,
+		title = ?, category = ?, description = ?, image = ?, demo_link = ?, repo_link = ?, 
+		show_architecture = ?, metrics = ?, key_points = ?, tech_stack = ?, sort_order = ? 
+		WHERE id = ?`,
 		project.Title, project.Category, project.Description, project.Image,
 		project.DemoLink, project.RepoLink, project.ShowArchitecture,
 		string(metricsJSON), string(keyPointsJSON), string(techStackJSON), project.SortOrder, idInt)
@@ -226,6 +248,7 @@ func UpdateProject(c *gin.Context) {
 		return
 	}
 
+	project.ID = idInt
 	c.JSON(http.StatusOK, models.APIResponse{
 		Success: true,
 		Message: "更新项目成功",
@@ -235,6 +258,14 @@ func UpdateProject(c *gin.Context) {
 
 // DeleteProject 删除项目
 func DeleteProject(c *gin.Context) {
+	// 在demo分支中，禁用项目删除功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "项目删除功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
@@ -245,22 +276,20 @@ func DeleteProject(c *gin.Context) {
 		return
 	}
 
-	// 检查记录是否存在
-	var exists int
-	err = database.DB.QueryRow("SELECT 1 FROM projects WHERE id = ?", idInt).Scan(&exists)
-	if err == sql.ErrNoRows {
-		c.JSON(http.StatusNotFound, models.APIResponse{
-			Success: false,
-			Message: "项目不存在",
-		})
-		return
-	}
-
-	_, err = database.DB.Exec("DELETE FROM projects WHERE id = ?", idInt)
+	result, err := database.DB.Exec("DELETE FROM projects WHERE id = ?", idInt)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.APIResponse{
 			Success: false,
 			Message: "删除项目失败: " + err.Error(),
+		})
+		return
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		c.JSON(http.StatusNotFound, models.APIResponse{
+			Success: false,
+			Message: "项目不存在",
 		})
 		return
 	}

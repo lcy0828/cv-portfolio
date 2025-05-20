@@ -93,6 +93,14 @@ func GetCertificate(c *gin.Context) {
 
 // CreateCertificate 创建新证书
 func CreateCertificate(c *gin.Context) {
+	// 在demo分支中，禁用证书创建功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "证书创建功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	var certificate models.Certificate
 	if err := c.ShouldBindJSON(&certificate); err != nil {
 		c.JSON(http.StatusBadRequest, models.APIResponse{
@@ -130,6 +138,14 @@ func CreateCertificate(c *gin.Context) {
 
 // UpdateCertificate 更新证书信息
 func UpdateCertificate(c *gin.Context) {
+	// 在demo分支中，禁用证书更新功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "证书更新功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
@@ -184,6 +200,14 @@ func UpdateCertificate(c *gin.Context) {
 
 // DeleteCertificate 删除证书
 func DeleteCertificate(c *gin.Context) {
+	// 在demo分支中，禁用证书删除功能
+	c.JSON(http.StatusForbidden, models.APIResponse{
+		Success: false,
+		Message: "证书删除功能已禁用",
+	})
+	return
+
+	// 以下是原始代码，在demo分支中不会执行
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {

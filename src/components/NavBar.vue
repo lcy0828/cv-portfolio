@@ -10,6 +10,11 @@
           <li v-for="item in navItems" :key="item.id">
             <a :href="'#' + item.id" @click="closeMenu">{{ item.name }}</a>
           </li>
+          <li class="github-link">
+            <a href="https://github.com/lcy0828/cv-portfolio" target="_blank" title="GitHub仓库">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -90,6 +95,7 @@ onUnmounted(() => {
 nav ul {
   display: flex;
   list-style: none;
+  align-items: center;
 }
 
 nav ul li {
@@ -117,6 +123,18 @@ nav ul li a:after {
 
 nav ul li a:hover:after {
   width: 100%;
+}
+
+.github-link a {
+  font-size: 1.2rem;
+}
+
+.github-link a:hover {
+  color: var(--accent-color);
+}
+
+.github-link a:after {
+  display: none;
 }
 
 .menu-toggle {
@@ -159,6 +177,15 @@ nav ul li a:hover:after {
   nav ul li a {
     display: block;
     font-size: 1.1rem;
+  }
+  
+  .github-link {
+    margin-top: 20px;
+  }
+  
+  .github-link a {
+    display: inline-block;
+    font-size: 1.5rem;
   }
 }
 </style> 
