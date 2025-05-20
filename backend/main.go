@@ -40,7 +40,17 @@ func main() {
 	r.StaticFS("/admin", http.Dir("./backend/admin"))
 
 	// 提供前端静态文件
-	r.StaticFS("/", http.Dir("./public"))
+	// 使用Static而不是StaticFS，并且指定具体文件
+	r.Static("/assets", "./public/assets")
+	r.StaticFile("/", "./public/index.html")
+	r.StaticFile("/favicon.ico", "./public/favicon.ico")
+	// 添加其他可能需要的静态文件
+	r.StaticFile("/robots.txt", "./public/robots.txt")
+
+	// 处理前端路由 (SPA应用需要)
+	r.NoRoute(func(c *gin.Context) {
+		c.File("./public/index.html")
+	})
 
 	// API路由组
 	api := r.Group("/api")
