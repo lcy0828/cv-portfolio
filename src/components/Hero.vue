@@ -3,7 +3,7 @@
     <div class="container hero-container">
       <div class="hero-content">
         <div class="avatar animate__animated animate__fadeIn">
-          <img src="https://via.placeholder.com/150x150" alt="个人头像" />
+          <img src="https://picsum.photos/150/150" alt="个人头像" />
         </div>
         <h1 class="animate__animated animate__fadeInUp">张三</h1>
         <h2 class="animate__animated animate__fadeInUp animate__delay-1s">
@@ -15,6 +15,19 @@
         <div class="hero-btns animate__animated animate__fadeInUp animate__delay-3s">
           <a href="#contact" class="btn btn-primary">联系我</a>
           <a href="#about" class="btn btn-outline">了解更多</a>
+        </div>
+        
+        <!-- 社交媒体链接 -->
+        <div class="social-links animate__animated animate__fadeInUp animate__delay-4s">
+          <a href="#" class="social-link">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="fab fa-twitter"></i>
+          </a>
         </div>
       </div>
       <div class="terminal-container animate__animated animate__fadeIn animate__delay-4s">
@@ -79,7 +92,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('https://via.placeholder.com/100x100');
+  background: url('https://picsum.photos/100/100?grayscale');
   opacity: 0.1;
 }
 
