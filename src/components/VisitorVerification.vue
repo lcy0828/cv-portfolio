@@ -47,8 +47,8 @@
 import { ref, computed } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { API_URL } from '../config';
 
-const API_URL = 'http://localhost:8080/api';
 const router = useRouter();
 
 // 验证状态
