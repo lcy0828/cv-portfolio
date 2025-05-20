@@ -7,8 +7,15 @@ COPY . .
 RUN npm run build
 
 # 构建阶段 - 后端
-FROM golang:1.18-alpine AS backend-builder
+FROM golang:1.23-alpine AS backend-builder
 WORKDIR /app
+
+# 安装构建 SQLite3 所需的依赖
+RUN apk add --no-cache gcc musl-dev
+
+# 启用 CGO
+ENV CGO_ENABLED=1
+
 COPY backend/ ./
 RUN go mod download
 RUN go build -o main .
@@ -18,7 +25,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # 安装必要的运行时依赖
-RUN apk add --no-cache ca-certificates tzdata
+RUN apk add --no-cache ca-certificates tzdata sqlite
 
 # 创建存储数据的目录
 RUN mkdir -p /app/data

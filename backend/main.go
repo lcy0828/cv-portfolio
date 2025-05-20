@@ -39,6 +39,9 @@ func main() {
 	// 提供静态文件(Admin UI)
 	r.StaticFS("/admin", http.Dir("./backend/admin"))
 
+	// 提供前端静态文件
+	r.StaticFS("/", http.Dir("./public"))
+
 	// API路由组
 	api := r.Group("/api")
 	{
