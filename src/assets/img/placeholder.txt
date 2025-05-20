@@ -1,0 +1,11 @@
+这个目录用于存放以下图片文件：
+
+1. avatar.jpg - 个人头像图片
+2. profile.jpg - 个人照片（关于我部分）
+3. pattern.png - 背景图案
+4. project1.jpg - 项目1缩略图
+5. project2.jpg - 项目2缩略图
+6. project3.jpg - 项目3缩略图
+7. project4.jpg - 项目4缩略图
+
+请将这些图片添加到此目录中，以确保项目正常运行。 

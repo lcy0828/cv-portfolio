@@ -1,0 +1,33 @@
+# 版本控制
+.git
+.gitignore
+
+# 依赖目录
+node_modules
+backend/vendor
+
+# 构建输出
+dist
+backend/main
+backend/main.exe
+
+# 本地数据库和日志
+data
+*.log
+
+# 开发环境配置
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# 编辑器配置
+.idea
+.vscode
+*.swp
+*.swo
+
+# 操作系统文件
+.DS_Store
+Thumbs.db 

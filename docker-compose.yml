@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  cv-portfolio:
+    build: .
+    container_name: cv-portfolio
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - GIN_MODE=release
+      - PORT=8080
+    restart: unless-stopped 
