@@ -8,7 +8,7 @@
       <div class="about-content" v-if="profile">
         <div class="about-image" data-aos="fade-right" data-aos-delay="100">
           <div class="image-container">
-            <img :src="profile.avatar || '../assets/img/profile.jpg'" alt="个人照片" />
+            <img :src="profile.avatar || 'https://via.placeholder.com/400x500'" alt="个人照片" />
           </div>
           <div class="tech-stack">
             <div class="tech-item"><i class="fab fa-linux"></i></div>

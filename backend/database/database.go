@@ -254,12 +254,7 @@ func initializeData() error {
 		INSERT INTO profile 
 		(name, title, avatar, email, phone, location, introduction, years_of_exp, education, job_status, philosophy, last_updated)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		"张三",
-		"云原生运维工程师",
-		"/assets/img/avatar.jpg",
-		"zhangsan@example.com",
-		"138-1234-5678",
-		"北京",
+		"张三", "云原生运维工程师", "https://via.placeholder.com/150x150", "zhangsan@example.com", "138-1234-5678", "北京",
 		"我是一名拥有5年经验的云原生运维工程师，专注于Kubernetes集群管理、自动化部署和系统架构设计。我热衷于利用最新技术解决复杂的运维挑战，并且善于构建高可用、可扩展的基础设施。",
 		5,
 		"计算机科学学士",
@@ -442,10 +437,7 @@ func initializeData() error {
 	// 初始化项目经验
 	projects := []map[string]interface{}{
 		{
-			"title":             "企业级微服务容器化迁移",
-			"category":          "云原生迁移",
-			"description":       "将传统单体应用拆分为微服务架构，并迁移至Kubernetes平台，提升系统弹性和可扩展性。",
-			"image":             "/assets/img/project1.jpg",
+			"title": "企业级微服务容器化迁移", "category": "云原生迁移", "description": "将传统单体应用拆分为微服务架构，并迁移至Kubernetes平台，提升系统弹性和可扩展性。", "image": "https://via.placeholder.com/800x600",
 			"demo_link":         "#",
 			"repo_link":         "#",
 			"show_architecture": true,
@@ -464,10 +456,7 @@ func initializeData() error {
 			"sort_order": 1,
 		},
 		{
-			"title":             "多云环境自动化运维平台",
-			"category":          "自动化部署",
-			"description":       "构建了一套跨多云平台的自动化运维系统，实现资源统一管理和应用自动部署。",
-			"image":             "/assets/img/project2.jpg",
+			"title": "多云环境自动化运维平台", "category": "自动化部署", "description": "构建了一套跨多云平台的自动化运维系统，实现资源统一管理和应用自动部署。", "image": "https://via.placeholder.com/800x600",
 			"demo_link":         "#",
 			"repo_link":         "#",
 			"show_architecture": false,

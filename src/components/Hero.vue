@@ -3,7 +3,7 @@
     <div class="container hero-container">
       <div class="hero-content">
         <div class="avatar animate__animated animate__fadeIn">
-          <img src="../assets/img/avatar.jpg" alt="个人头像" />
+          <img src="https://via.placeholder.com/150x150" alt="个人头像" />
         </div>
         <h1 class="animate__animated animate__fadeInUp">张三</h1>
         <h2 class="animate__animated animate__fadeInUp animate__delay-1s">
@@ -79,7 +79,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('../assets/img/pattern.png');
+  background: url('https://via.placeholder.com/100x100');
   opacity: 0.1;
 }
 
