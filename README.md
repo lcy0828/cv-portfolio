@@ -80,6 +80,14 @@ go build -o main
 
 ## Docker容器化部署
 
+```run
+# 创建并进入目录 - 前端
+mkdir cv-portfolio && cd cv-portfolio
+# 运行容器
+docker run -p 8080:8080 -v $(pwd)/data:/app/data lcy0828/cv-portfolio:latest
+
+```
+
 ### 创建Dockerfile
 在项目根目录创建`Dockerfile`文件，内容如下：
 
